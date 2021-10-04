@@ -1,0 +1,26 @@
+epochs: 200
+global_nodes: True
+#global_nodes_connections: 'all'
+global_nodes_connections: 'partitions'
+global_features_aggr: 'mean'
+level_partition: 1
+laplacian_encoding: True
+#model:
+#emb_size : 64
+hid_dim : 64
+n_head : 8
+dropout : 0.2
+num_samples : null
+layers : 3
+sampler: 'neighborhood'
+#sampler: 'node2vec'
+#
+split : 'gcn'
+#split : 'caley'
+optimizer : 'adam'
+sgd_momentum : None
+weight_decay : 0.0005
+lr : 0.0003
+#lr : 0.001
+
+

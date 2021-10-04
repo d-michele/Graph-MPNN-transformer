@@ -44,3 +44,8 @@ weight_decay :
 lr :
     - description: learning rate
 ```
+
+To run the script with the hyperparameter specified in the yml execute: 
+```
+python train.py
+```

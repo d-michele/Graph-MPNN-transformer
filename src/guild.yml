@@ -1,0 +1,119 @@
+- model: GNN 
+  description: Transformer GNN
+  sourcecode:
+
+    # Source code config at the model level applies to all
+    # operations. In this case we want to copy all of the text files
+    # (the default configuration) but exclude everything under 'data'.
+
+    - exclude: 'data/*'
+
+  operations:
+    train:
+
+      # The default 'main' attribute is 'experiment' based on the
+      # operation name. While we could omit this below, it's good
+      # practice to specify it.
+
+      main: train 
+
+      # In this configuration, we require the project 'data'
+      # directory. Guild creates a symbolic link named 'data' to
+      # this directory in each run directory for the operation.
+
+      requires:
+        - file: ../cora
+
+      flags-dest: config:hyp.yml
+      flags-import: all
+
+#        global_nodes:
+#          description: Add global nodes node generated from communities detection
+#            default: True
+#            choices: [True, False]
+#        global_nodes_connections:
+#          description: Connect globals node with either the nodes in the partition and other global nodes or connect global nodes with all nodes in the network
+#          default : 'partitions'
+#          choices : ['all', 'partitions']
+#        laplacian_encoding:
+#          description: Use laplacian encoding to embed node position in the network in node features
+#          default: True
+#          choices : [True, False]
+#        emb_size :
+#          description: Embedding size of input linear projection to deal with one hot encoding high dimensionality
+#          default: 64
+#        n_head :
+#          description: Attention heads
+#          default: 8
+#        dropout :
+#          description: Dropout probability rate
+#          default: 0.2
+#        num_samples : None
+#          description: Number of neighbours to sample in doing node aggregations. Use None to take all neighbors.
+#          default: None
+#        layers :
+#          description: Number of attention based layer in the Transformer Encoder model
+#          default: 3
+#        split : 'gcn'
+#          description: Train, val and test split. Allowed the split used in gcn paper (use 'gcn') or the split on used in caleynet paper (use 'caley').
+#        optimizer : 'adam'
+#          description: Optimizer
+#        sgd_momentum :
+#          description: momentum of sgd optimizer
+#          defualt: None
+#        weight_decay :
+#          description: weight decay
+#          default: 0.0005
+#        lr :
+#          descrption: learning rate
+#          default: 0.0003
+
+
+  #experiment-2:
+      #main: experiment
+
+      ## This is an alternative configuration that accomplishes the
+      ## same thing using a different directory structure. First, the
+      ## file 'data/file.csv' is selected. Without any additional
+      ## configuration, Guild creates a link named 'file.csv' in the
+      ## run directory.
+      ##
+      ## However, we also define a 'path' attribute. This tells Guild
+      ## where links are created within a run directory. In this case,
+      ## the link 'file.csv' is created in a subdirectory named 'data.
+      ##
+      ## Note that this accomplishes the same thing as the previous
+      ## example, but because the link is to 'file.csv', any other
+      ## files in the 'data' directory would *not* be available to the
+      ## run. To make all files under 'data' available, use the
+      ## configuration for 'experiment' above.
+
+      #requires:
+        #- file: data/file.csv
+          #path: data
+
+    #experiment-3:
+      #main: experiment
+
+      ## In this configuration, we refer to a named resource, which is
+      ## defined under the 'resources' model attribute. Use named
+      ## resources when a resource definition is used by more than one
+      ## operation or to improve the readability of a requires spec.
+
+      #requires: data
+
+  #resources:
+    #data:
+
+      ## Named resource can be referenced in any operation 'requires'
+      ## attribute. Here we use the same spec as the requirement for
+      ## the 'experiment' operation.
+      ##
+      ## (Note that as of Guild 0.6.5, named resource sources must be
+      ## defined under the 'sources' attribute. This requirement will
+      ## be relaxed in a future release to mirror the structure
+      ## supported by inline resources.)
+
+      #sources:
+        #- file: data
+
